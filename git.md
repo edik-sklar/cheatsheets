@@ -23,3 +23,6 @@ __pycache__/    # Python bytecode
 requirements.txt            # pip freeze > requirements.txt
 README.md                   # project description
 your .py files
+
+## Verify remote repo
+git remote -v    # shows which GitHub repo you're connected to
