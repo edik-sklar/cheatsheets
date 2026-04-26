@@ -1,0 +1,46 @@
+## Error Handling
+
+**raise** — you throw an error intentionally. Fail loud.
+**try/except** — you catch errors gracefully. Handle and continue.
+
+**When to use:**
+raise      → bad parameters, programming errors
+try/except → external things you can't control (files, network)
+
+**Syntax:**
+try:
+    result = risky_operation()
+except SpecificError as e:
+    print(f"handled: {e}")
+finally:
+    cleanup()  # always runs, even if exception
+
+**Real examples:**
+# raise — caller passed bad window size
+if window_size > len(requests):
+    raise ValueError(f"Window {window_size} exceeds data {len(requests)}")
+
+# try/except — file might not exist
+try:
+    with open(filepath) as f:
+        for line in f:
+            yield line
+except FileNotFoundError:
+    print(f"Warning: {filepath} not found")
+
+# try/except — log line might be malformed
+try:
+    command = line.split()[3]
+except IndexError:
+    print(f"Warning: malformed line: {line}")
+
+**Common exceptions:**
+ValueError       → bad value:  window_size = -1
+TypeError        → wrong type: sum("abc")
+IndexError       → out of range: line.split()[99]
+KeyError         → missing key: d["missing"]
+FileNotFoundError → no file
+
+**Gotcha:**
+except Exception:  # ❌ hides bugs
+except ValueError: # ✅ specific, intentional
